@@ -36,17 +36,17 @@ bool uzunLedDurum = false;
 bool stopLedDurum = false;
 bool solLedDurum = false;
 bool solLedState = LOW;
-unsigned solLedEskiZaman = 0;
+unsigned long solLedEskiZaman = 0;
 bool sagLedState = LOW;
 bool sagLedDurum = false;
-unsigned sagLedEskiZaman = 0;
+unsigned long sagLedEskiZaman = 0;
 bool plakaLedDurum = false;
 bool frenLedDurum = false;
 bool geriLedDurum = false;
 bool icLedDurum = false;
 bool dortluLedDurum = false;
 bool dortluLedState = LOW;
-unsigned dortluLedEskiZaman = 0;
+unsigned long dortluLedEskiZaman = 0;
 
 bool systemState = false;
 
@@ -74,7 +74,7 @@ void loop() {
     inMuteMs = 0 ;
   }
 
-  if(parkLedDurum == true){
+  if(parkLedDurum == true && systemState == true){
     digitalWrite(STOP_LED, HIGH);
     digitalWrite(IC_LED, HIGH);
     digitalWrite(PLAKA_LED, HIGH);
@@ -84,19 +84,19 @@ void loop() {
     digitalWrite(PLAKA_LED, LOW);
   }
 
-  if(solLedDurum == true && (millis() - solLedEskiZaman > 500)){
+  if(solLedDurum == true && (millis() - solLedEskiZaman > 500) && systemState == true){
     solLedState = !solLedState;
     digitalWrite(SOL_LED, solLedState);
     solLedEskiZaman = millis();
   }
 
-  if(sagLedDurum == true && (millis() - sagLedEskiZaman > 500)){
+  if(sagLedDurum == true && (millis() - sagLedEskiZaman > 500) && systemState == true){
     sagLedState = !sagLedState;
     digitalWrite(SAG_LED, sagLedState);
     sagLedEskiZaman = millis();
   }
 
-  if(dortluLedDurum == true && (millis() - dortluLedEskiZaman > 500)){
+  if(dortluLedDurum == true && (millis() - dortluLedEskiZaman > 500) && systemState == true){
     dortluLedState = !dortluLedState;
     digitalWrite(SAG_LED, dortluLedState);
     digitalWrite(SOL_LED, dortluLedState);
@@ -205,30 +205,30 @@ void loop() {
       inMuteMs = millis() ;
     } else if (IrReceiver.decodedIRData.command == 0x7 && (millis() - inMuteMs > 150) && systemState == true){
       // Serial.println("Button 7");
-            if(solLedDurum == true){
+      if(solLedDurum == true){
         solLedDurum = false;
-        digitalWrite(SOL_LED, LOW);
         solLedState = LOW;
         solLedEskiZaman = 0;
+        digitalWrite(SOL_LED, LOW);
       }
 
       if(sagLedDurum == true){
         sagLedDurum = false;
-        digitalWrite(SAG_LED, LOW);
         sagLedState = LOW;
         sagLedEskiZaman = 0;
+        digitalWrite(SAG_LED, LOW);
       }
 
       dortluLedDurum = !dortluLedDurum;            
-      inMuteMs = millis() ;
+      inMuteMs = millis();
 
       if(dortluLedDurum == false){
-        digitalWrite(SAG_LED, LOW);
-        digitalWrite(SOL_LED, LOW);
         sagLedState = LOW;
         sagLedEskiZaman = 0;
         solLedState = LOW;
         solLedEskiZaman = 0;
+        digitalWrite(SAG_LED, LOW);
+        digitalWrite(SOL_LED, LOW);
       }
     } else if (IrReceiver.decodedIRData.command == 0x15 && (millis() - inMuteMs > 150) && systemState == true){
       // Serial.println("Button 8");
