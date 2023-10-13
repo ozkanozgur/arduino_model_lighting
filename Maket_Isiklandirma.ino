@@ -247,8 +247,52 @@ void loop() {
       // Serial.println("Button Up");
     } else if (IrReceiver.decodedIRData.command == 0x8){
       // Serial.println("Button Left");
+      if(sagLedDurum == true){
+        sagLedDurum = false;
+        digitalWrite(SAG_LED, LOW);
+        sagLedState = LOW;
+        sagLedEskiZaman = 0;
+      }
+
+      if(dortluLedDurum == true){
+        dortluLedDurum = false;
+        digitalWrite(SAG_LED, LOW);
+        digitalWrite(SOL_LED, LOW);
+        dortluLedState = LOW;
+        dortluLedEskiZaman = 0;
+      }
+
+      solLedDurum = !solLedDurum;
+      inMuteMs = millis();
+      if(solLedDurum == false){
+        digitalWrite(SOL_LED, LOW);
+        solLedState = LOW;
+        solLedEskiZaman = 0;
+      }
     } else if (IrReceiver.decodedIRData.command == 0x5A){
       // Serial.println("Button Right");
+      if(solLedDurum == true){
+        solLedDurum = false;
+        digitalWrite(SOL_LED, LOW);
+        solLedState = LOW;
+        solLedEskiZaman = 0;
+      }
+
+      if(dortluLedDurum == true){
+        dortluLedDurum = false;
+        digitalWrite(SAG_LED, LOW);
+        digitalWrite(SOL_LED, LOW);
+        dortluLedState = LOW;
+        dortluLedEskiZaman = 0;
+      }
+
+      sagLedDurum = !sagLedDurum;
+      inMuteMs = millis();
+      if(sagLedDurum == false){
+        digitalWrite(SAG_LED, LOW);
+        sagLedState = LOW;
+        sagLedEskiZaman = 0;
+      }
     } else if (IrReceiver.decodedIRData.command == 0x1C && (millis() - inMuteMs > 150)){
       demo();
       inMuteMs = millis();
