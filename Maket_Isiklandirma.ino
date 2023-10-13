@@ -34,7 +34,6 @@ OK -> Sistemi Aç/Kapa (Açınca kısa bir demo yapar.)
 #define reedPin3 A2
 #define reedPin4 A3
 #define reedPin5 A4
-#define indoorLigthPin A5
 
 bool parkLedDurum = false;
 bool kisaLedDurum = false;
@@ -75,13 +74,14 @@ void setup() {
   pinMode(reedPin3, INPUT_PULLUP); 
   pinMode(reedPin4, INPUT_PULLUP); 
   pinMode(reedPin5, INPUT_PULLUP); 
-  pinMode(indoorLigthPin, OUTPUT);
 }
 
 unsigned long inMuteMs = 0;
 
 void loop() {
-  checkReeds();
+  if(systemState == true){
+    checkReeds();
+  }
 
   if ( millis() - inMuteMs > 1000 && inMuteMs != 0 ) {
     // abandon old mute attempt
@@ -482,8 +482,12 @@ void demo(){
 
 void checkReeds(){
   if(digitalRead(reedPin1) == HIGH || digitalRead(reedPin2) == HIGH || digitalRead(reedPin3) == HIGH || digitalRead(reedPin4) == HIGH || digitalRead(reedPin5) == HIGH){
-    digitalWrite(indoorLigthPin, HIGH);
+    if(parkLedDurum == false){
+      digitalWrite(IC_LED, HIGH);
+    }
   }else{
-    digitalWrite(indoorLigthPin, LOW);
+    if(parkLedDurum == false){
+      digitalWrite(IC_LED, LOW);
+    }
   }
 }
