@@ -29,6 +29,12 @@ OK -> Sistemi Aç/Kapa (Açınca kısa bir demo yapar.)
 #define FREN_LED 10
 #define GERI_LED 11
 #define IC_LED 12
+#define reedPin1 A0
+#define reedPin2 A1
+#define reedPin3 A2
+#define reedPin4 A3
+#define reedPin5 A4
+#define indoorLigthPin A5
 
 bool parkLedDurum = false;
 bool kisaLedDurum = false;
@@ -64,11 +70,19 @@ void setup() {
   pinMode(FREN_LED, OUTPUT);
   pinMode(GERI_LED, OUTPUT);
   pinMode(IC_LED, OUTPUT);
+  pinMode(reedPin1, INPUT_PULLUP); 
+  pinMode(reedPin2, INPUT_PULLUP); 
+  pinMode(reedPin3, INPUT_PULLUP); 
+  pinMode(reedPin4, INPUT_PULLUP); 
+  pinMode(reedPin5, INPUT_PULLUP); 
+  pinMode(indoorLigthPin, OUTPUT);
 }
 
 unsigned long inMuteMs = 0;
 
 void loop() {
+  checkReeds();
+
   if ( millis() - inMuteMs > 1000 && inMuteMs != 0 ) {
     // abandon old mute attempt
     inMuteMs = 0 ;
@@ -463,5 +477,13 @@ void demo(){
     digitalWrite(STOP_LED, LOW);
 
     systemState = false;
+  }
+}
+
+void checkReeds(){
+  if(digitalRead(reedPin1) == HIGH || digitalRead(reedPin2) == HIGH || digitalRead(reedPin3) == HIGH || digitalRead(reedPin4) == HIGH || digitalRead(reedPin5) == HIGH){
+    digitalWrite(indoorLigthPin, HIGH);
+  }else{
+    digitalWrite(indoorLigthPin, LOW);
   }
 }
