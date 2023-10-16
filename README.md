@@ -5,6 +5,8 @@ You can make lighting for your plastic or diecast models.
 
 Arduino project files, KiCad PCB design files are in this project.
 
+If you don't want to use reed relays, you can replace reed relay with pullup buttons, or pullup short circuits. If you choose pullup buttons or pullup shortcircuits, you need use codes in "without-reed-relays" branch.
+
 ### Complete component list is below.
 
 - 1 x Arduino Uno
@@ -40,6 +42,8 @@ Bu projeyi kullanarak plastik yada diecast modellerinize uzaktan kumanda kontrol
 
 Arduino proje dosyaları ve KiCad baskı devre tasarım dosyaları dahildir.
 
+Eğer reed röleler yerine pullup button yada pullup kısa devre yapmak isterseniz, "without-reed-relays" branchi içerisindeki kodları kullanmanız gerekmektedir. 
+
 ### Komponent Listesi
 
 - 1 x Arduino Uno
@@ -67,3 +71,5 @@ Arduino proje dosyaları ve KiCad baskı devre tasarım dosyaları dahildir.
 - 6 => Fren lambası aç/kapat
 - 7 => Dörtlüler aç/kapat
 - 8 => Geri vites lambası aç/kapat
+- Sol Ok => Sol sinyal aç/kapat
+- Sağ Ok => Sağ sinyal aç/kapat

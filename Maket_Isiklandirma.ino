@@ -29,11 +29,11 @@ OK -> Sistemi Aç/Kapa (Açınca kısa bir demo yapar.)
 #define FREN_LED 10
 #define GERI_LED 11
 #define IC_LED 12
-#define reedPin1 A0
-#define reedPin2 A1
-#define reedPin3 A2
-#define reedPin4 A3
-#define reedPin5 A4
+#define short1 A0
+#define short2 A1
+#define short3 A2
+#define short4 A3
+#define short5 A4
 
 bool parkLedDurum = false;
 bool kisaLedDurum = false;
@@ -69,18 +69,18 @@ void setup() {
   pinMode(FREN_LED, OUTPUT);
   pinMode(GERI_LED, OUTPUT);
   pinMode(IC_LED, OUTPUT);
-  pinMode(reedPin1, INPUT_PULLUP); 
-  pinMode(reedPin2, INPUT_PULLUP); 
-  pinMode(reedPin3, INPUT_PULLUP); 
-  pinMode(reedPin4, INPUT_PULLUP); 
-  pinMode(reedPin5, INPUT_PULLUP); 
+  pinMode(short1, INPUT_PULLUP); 
+  pinMode(short2, INPUT_PULLUP); 
+  pinMode(short3, INPUT_PULLUP); 
+  pinMode(short4, INPUT_PULLUP); 
+  pinMode(short5, INPUT_PULLUP); 
 }
 
 unsigned long inMuteMs = 0;
 
 void loop() {
   if(systemState == true){
-    checkReeds();
+    checkShortCircuits();
   }
 
   if ( millis() - inMuteMs > 1000 && inMuteMs != 0 ) {
@@ -480,8 +480,8 @@ void demo(){
   }
 }
 
-void checkReeds(){
-  if(digitalRead(reedPin1) == HIGH || digitalRead(reedPin2) == HIGH || digitalRead(reedPin3) == HIGH || digitalRead(reedPin4) == HIGH || digitalRead(reedPin5) == HIGH){
+void checkShortCircuits(){
+  if(digitalRead(short1) == HIGH || digitalRead(short2) == HIGH || digitalRead(short3) == HIGH || digitalRead(short4) == HIGH || digitalRead(short5) == HIGH){
     if(parkLedDurum == false){
       digitalWrite(IC_LED, HIGH);
     }
