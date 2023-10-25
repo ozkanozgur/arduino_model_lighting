@@ -259,7 +259,7 @@ void loop() {
       // Serial.println("Button #");
     } else if (IrReceiver.decodedIRData.command == 0x18){
       // Serial.println("Button Up");
-    } else if (IrReceiver.decodedIRData.command == 0x8){
+    } else if (IrReceiver.decodedIRData.command == 0x8 && (millis() - inMuteMs > 150) && systemState == true){
       // Serial.println("Button Left");
       if(sagLedDurum == true){
         sagLedDurum = false;
@@ -283,7 +283,7 @@ void loop() {
         solLedState = LOW;
         solLedEskiZaman = 0;
       }
-    } else if (IrReceiver.decodedIRData.command == 0x5A){
+    } else if (IrReceiver.decodedIRData.command == 0x5A && (millis() - inMuteMs > 150) && systemState == true){
       // Serial.println("Button Right");
       if(solLedDurum == true){
         solLedDurum = false;
